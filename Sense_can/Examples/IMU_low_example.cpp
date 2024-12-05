@@ -8,7 +8,7 @@
 float array[] = {1.0,2.3};
 void setup () {
   Sense_can startup;
-  startup.Setup_can(9600, 250*1000);
+  startup.Setup_can(9600, 250*1000); //set baudrate for serial monitoring and bitrate for can
 }
 void loop () {
   Sense_can instance;
