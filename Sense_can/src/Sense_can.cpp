@@ -106,7 +106,7 @@ void Sense_can :: Ultra(float data, int addr , uint32_t timebuff){
   Ultramsg.data32[0] = data; //Ultrasonic
   const bool check = ACAN_T4::can1.tryToSend(Ultramsg); //send message
   if (check){
-    Serial.print("Pressure: ");
+    Serial.print("Distance: ");
     Serial.printf("%x ", Ultramsg.data32);
     delay(timebuff);
   }
