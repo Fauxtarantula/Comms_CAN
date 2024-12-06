@@ -10,7 +10,6 @@ pinMode (LED_BUILTIN, OUTPUT) ;
     digitalWrite (LED_BUILTIN, !digitalRead (LED_BUILTIN)) ;
   }
   Serial.println ("Initiate CAN settings") ;
-  
   ACAN_T4_Settings settings (bitrate) ; // 250 kbit/s
   const uint32_t errorCode = ACAN_T4::can1.begin (settings) ;
 
@@ -49,20 +48,21 @@ pinMode (LED_BUILTIN, OUTPUT) ;
     }
   }
 }
-
 void Sense_can :: IMU_low(float data[2], int addr, uint32_t timebuff ){
   // create canmessage instance
   CANMessage IMU_low_msg;
   IMU_low_msg.id = addr; 
   IMU_low_msg.len = 8;
-  IMU_low_msg.data32[0] = data[0]; //roll 
-  IMU_low_msg.data32[1] = data[1]; //pitch
+  IMU_low_msg.dataFloat[0] = data[0]; //roll 
+  IMU_low_msg.dataFloat[1] = data[1]; //pitch
   const bool check = ACAN_T4::can1.tryToSend(IMU_low_msg); //send message
   if (check){
     Serial.print("Roll: ");
-    Serial.printf("%x ", IMU_low_msg.data32[0]);
-    Serial.print("Pitch: ");
-    Serial.printf("%x ", IMU_low_msg.data32[1]);
+    //Serial.printf("%x ", IMU_low_msg.dataFloat[0]);
+    Serial.print(IMU_low_msg.dataFloat[0]);
+    Serial.print(" Pitch: ");
+    //Serial.printf("%x ", IMU_low_msg.dataFloat[1]);
+    Serial.print(IMU_low_msg.dataFloat[1]);
     Serial.println("");
     delay(timebuff);
   }
@@ -72,45 +72,52 @@ void Sense_can :: IMU_hi_depth(float data[2], int addr, uint32_t timebuff){
   CANMessage IMU_hi_depth_msg;
   IMU_hi_depth_msg.id = addr; 
   IMU_hi_depth_msg.len = 8;
-  IMU_hi_depth_msg.data32[0] = data[0]; //yaw
-  IMU_hi_depth_msg.data32[1] = data[1]; //depth
+  IMU_hi_depth_msg.dataFloat[0] = data[0]; //yaw
+  IMU_hi_depth_msg.dataFloat[1] = data[1]; //depth
   const bool check = ACAN_T4::can1.tryToSend(IMU_hi_depth_msg); //send message
   if (check){
     Serial.print("Yaw: ");
-    Serial.printf("%x ", IMU_hi_depth_msg.data32[0]);
-    Serial.println("Depth: ");
-    Serial.printf("%x ", IMU_hi_depth_msg.data32[1]);
+    //Serial.printf("%x ", IMU_hi_depth_msg.dataFloat[0]);
+    Serial.print(IMU_hi_depth_msg.dataFloat[0]);
+    Serial.print(" Depth: ");
+    //Serial.printf("%x ", IMU_hi_depth_msg.dataFloat[1]);
+    Serial.print(IMU_hi_depth_msg.dataFloat[1]);
+    Serial.println("");
     delay(timebuff);
   }
 }
+
 void Sense_can :: PHT(float data[2], int addr, uint32_t timebuff){
   CANMessage PHTmsg;
     PHTmsg.id = addr; 
     PHTmsg.len = 8;
-    PHTmsg.data32[0] = data[0]; //Pressure
-    PHTmsg.data32[1] = data[1]; //Temperature
+    PHTmsg.dataFloat[0] = data[0]; //Pressure
+    PHTmsg.dataFloat[1] = data[1]; //Temperature
 
   const bool check = ACAN_T4::can1.tryToSend(PHTmsg); //send message
   if (check){
     Serial.print("Pressure: ");
-    Serial.printf("%x ", PHTmsg.data32[0]);
-    Serial.println("Temperature: ");
-    Serial.printf("%x ", PHTmsg.data32[1]);
+    Serial.printf("%x ", PHTmsg.dataFloat[0]);
+    Serial.print("Temperature: ");
+    Serial.printf("%x ", PHTmsg.dataFloat[1]);
+    Serial.print("");
     delay(timebuff);
   }
 }
+
 void Sense_can :: Ultra(float data, int addr , uint32_t timebuff){
   CANMessage Ultramsg;
   Ultramsg.id = addr; 
   Ultramsg.len = 8;
-  Ultramsg.data32[0] = data; //Ultrasonic
+  Ultramsg.dataFloat[0] = data; //Ultrasonic
   const bool check = ACAN_T4::can1.tryToSend(Ultramsg); //send message
   if (check){
     Serial.print("Distance: ");
-    Serial.printf("%x ", Ultramsg.data32);
+    Serial.printf("%x ", Ultramsg.dataFloat);
     delay(timebuff);
   }
 }
+
 void Sense_can :: Heartbeat(){
   CANMessage ping;
   ping.id = 0x30;
