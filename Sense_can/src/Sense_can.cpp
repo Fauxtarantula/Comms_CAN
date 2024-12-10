@@ -36,6 +36,13 @@ pinMode (LED_BUILTIN, OUTPUT) ;
   Serial.print ("Sample point: ") ;
   Serial.print (settings.samplePointFromBitStart ()) ;
   Serial.println ("%") ;
+
+	// Set Filters
+
+	const ACANPrimaryFilter filter[2] = {
+		ACANPrimaryFilter(kData,kStandard, 0x30, handlePrimaryFilterReception),
+		ACANPrimaryFilter(handlePrimaryFilterReception)
+	};
   if (0 == errorCode) {
     Serial.println ("can1 ok") ;
   }else{
