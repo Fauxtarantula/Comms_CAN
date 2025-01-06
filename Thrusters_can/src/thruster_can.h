@@ -17,4 +17,4 @@ public:
   void begin();
   bool receive_speeds(volatile uint8_t data[8]);
   bool transmit_heartbeat();
-}
+};
