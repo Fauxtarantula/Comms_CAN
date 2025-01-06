@@ -17,7 +17,7 @@ void loop() {
   if (millis() / txDly != last)             // tx every txDly
   {
     last = millis() / txDly;
-    can.transmit_heartbeat;
+    can.transmit_heartbeat();
     serial.println("sending heartbeat\n");
   }
 
