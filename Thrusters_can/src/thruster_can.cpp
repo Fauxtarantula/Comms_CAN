@@ -4,7 +4,7 @@
  * Starts the can bus with RX on A11 and TX on A12
 */
 void thrusterCAN::begin() {
-  _can.begin(STD_ID_LEN, BR250K, PORTA_11_12_WIRE_PULLUP);
+  _can.begin(STD_ID_LEN, BR500K, PORTB_8_9_XCVR);
   _can.filterMask16Init(0, ID_A, MASK_A, ID_B, MASK_B);
 }
 
