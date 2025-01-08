@@ -23,10 +23,6 @@ void Sense_can :: send2data(float data[2], int addr, uint32_t timebuff ){ //as s
   msg.dataFloat[0] = data[0]; 
   msg.dataFloat[1] = data[1]; 
   const bool check = ACAN_T4::can1.tryToSend(msg); //send message
-  if (check){
-
-    delay(timebuff);
-  }
 }
 
 void Sense_can :: send1data(float data, int addr , uint32_t timebuff){ // send 1 data in msg
@@ -35,9 +31,6 @@ void Sense_can :: send1data(float data, int addr , uint32_t timebuff){ // send 1
   msg.len = 8;
   msg.dataFloat[0] = data; 
   const bool check = ACAN_T4::can1.tryToSend(msg); //send message
-  if (!check){
-    delay(timebuff);
-  }
 }
 
 void Sense_can :: Heartbeat(){ //not too sure why need a unique identifier
@@ -49,9 +42,6 @@ void Sense_can :: Heartbeat(){ //not too sure why need a unique identifier
   ping.len = 1;
   ping.data[0] = 0x10;
   const bool check = ACAN_T4::can1.tryToSend(ping);
-  if (check){
-    delay(0);
-  }
   if(ACAN_T4::can1.receive(ping)){
     digitalWrite(LED_BUILTIN,HIGH);
   }
