@@ -6,11 +6,12 @@
 #include <Sense_can.h>
 
 float array[] = {1.0,2.3};
+int addr = 0x13;
+Sense_can can;
+
 void setup () {
-  Sense_can startup;
-  startup.Setup_can(9600, 250*1000); //set baudrate for serial monitoring and bitrate for can
+  can.Setup_can( 50*1000); //set bit rate of can
 }
 void loop () {
-  Sense_can instance;
-  instance.IMU_low(array);
+  can.send2data(array, addr);
 }
