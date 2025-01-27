@@ -124,6 +124,7 @@ union MSG {
   int16_t int16[4];
   int32_t int32[2];
   int64_t int64;
+  float data_float[2];
 };
 
 struct msgFrm

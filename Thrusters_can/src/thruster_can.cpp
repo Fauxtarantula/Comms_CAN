@@ -25,3 +25,7 @@ bool thrusterCAN::transmit_heartbeat() {
   uint8_t txData[1] = {0x00};
   return _can.transmit(HEARTBEAT_ID, txData, 1);
 }
+
+bool thrusterCAN::transmit(int id, MSG data, int len) {
+  return _can.transmit(id, data, len);
+}
