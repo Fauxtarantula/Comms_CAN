@@ -26,6 +26,6 @@ bool thrusterCAN::transmit_heartbeat() {
   return _can.transmit(HEARTBEAT_ID, txData, 1);
 }
 
-bool thrusterCAN::transmit(int id, MSG data, int len) {
+bool thrusterCAN::transmit(int id, const void* data, int len) {
   return _can.transmit(id, data, len);
 }
